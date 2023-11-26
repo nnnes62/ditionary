@@ -1,0 +1,92 @@
+class DictionaryEntry:
+    def __init__(self, english_word, thai_translation, word_type):
+        self.english_word = english_word
+        self.thai_translation = thai_translation
+        self.word_type = word_type
+class Dictionary:
+    def __init__(self):
+        self.entries = []
+
+    def add_entry(self, entry):
+        self.entries.append(entry)
+
+    def display_entries(self):
+        for entry in self.entries:
+            print(f"{entry.english_word} ({entry.word_type}): {entry.thai_translation}")
+
+    def search_entry(self, word):
+        for entry in self.entries:
+            if entry.english_word.lower() == word.lower():
+                return entry
+        return None
+
+    def delete_entry(self, word):
+        entry = self.search_entry(word)
+        if entry:
+            self.entries.remove(entry)
+            print(f"Deleted entry: {entry.english_word}")
+        else:
+            print("Entry not found.")
+
+    def update_entry(self, word, thai_translation, word_type):
+        entry = self.search_entry(word)
+        if entry:
+            entry.thai_translation = thai_translation
+            entry.word_type = word_type
+            print(f"Updated entry: {entry.english_word}")
+        else:
+            print("Entry not found.")
+def main():
+    my_dictionary = Dictionary()
+
+    while True:
+        print("\n===== Dictionary Menu =====")
+        print("1. Add Entry")
+        print("2. Display Entries")
+        print("3. Search Entry")
+        print("4. Delete Entry")
+        print("5. Update Entry")
+        print("6. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            english_word = input("Enter English word: ")
+            thai_translation = input("Enter Thai translation: ")
+            word_type = input("Enter word type: ")
+            entry = DictionaryEntry(english_word, thai_translation, word_type)
+            my_dictionary.add_entry(entry)
+
+        elif choice == '2':
+            my_dictionary.display_entries()
+
+        elif choice == '3':
+            word_to_search = input("Enter the English word to search: ")
+            entry = my_dictionary.search_entry(word_to_search)
+            if entry:
+                print(f"{entry.english_word} ({entry.word_type}): {entry.thai_translation}")
+            else:
+                print("Entry not found.")
+
+        elif choice == '4':
+            word_to_delete = input("Enter the English word to delete: ")
+            my_dictionary.delete_entry(word_to_delete)
+
+        elif choice == '5':
+            word_to_update = input("Enter the English word to update: ")
+            new_thai_translation = input("Enter the new Thai translation: ")
+            new_word_type = input("Enter the new word type: ")
+            my_dictionary.update_entry(word_to_update, new_thai_translation, new_word_type)
+
+        elif choice == '6':
+            print("Exiting program.")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
+
+
+
